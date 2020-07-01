@@ -2,9 +2,6 @@ pipeline {
   agent {
     label "e2e-framework"
   }
-  tools {
-    maven 'Maven 3.6.0'
-  }
   triggers {
     pollSCM('H/1 * * * *')
   }
@@ -37,7 +34,7 @@ pipeline {
       }
     }
     stage('Build') {
-      steps {
+      steps withMaven(maven : 'apache-maven-3.6.1') {
         sh 'mvn clean install -U'
       }
     }
